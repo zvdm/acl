@@ -1,0 +1,16 @@
+.idea/
+*.pyc
+*~
+__pycache__
+venv
+db.sqlite3
+/static
+acl/static
+.DS_Store
+main/migrations/*.py
+/copy
+*.rdb
+/images
+guni_django.py
+init.sh
+nginx.conf

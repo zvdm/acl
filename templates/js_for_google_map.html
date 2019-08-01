@@ -1,0 +1,29 @@
+<script>
+
+  function myMap() {
+    var mapCenter = new google.maps.LatLng(45.014805, 38.961887)
+    var mapProp   = {
+      center    : mapCenter,
+      zoom      : 17,
+      mapTypeId : google.maps.MapTypeId.ROADMAP,
+    }
+
+    var map       = new google.maps.Map(document.getElementById('map'), mapProp)
+
+    var marker    = new google.maps.Marker({
+      position  : mapCenter,
+      map       : map,
+      animation : google.maps.Animation.BOUNCE,
+    })
+
+    marker.setMap(map)
+
+    google.maps.event.addListener(marker, 'click', function() {
+      var infowindow = new google.maps.InfoWindow({
+        content: 'ACL Company'
+      })
+      infowindow.open(map, marker)
+    })
+  }
+
+</script>

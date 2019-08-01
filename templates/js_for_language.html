@@ -1,0 +1,234 @@
+<script type="text/javascript">
+	
+	var flag_for_language 			= 'ru';
+
+	var list_of_keys_meta			= [
+										'meta_discripion',
+							  		  ]
+
+	var list_of_keys_nav			= [
+										'navbar_home',
+										'navbar_about',
+										'navbar_services',
+										'navbar_press',
+										'navbar_contact',
+							  		  ]
+
+	var list_of_keys_form			= [
+										'contact_section_form_sender',
+										'contact_section_form_email',
+										'contact_section_form_msg',
+							  		  ]
+
+	var list_of_keys_slogan			= [
+										'slogan_large',
+										'slogan_small',
+							  		  ]
+
+	var dict_of_keys_icons			= {
+								'contact_section_address'	: '<i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right" style="color: #001489;"></i>',
+								'btn_all_pub' 				: '<i class="fa fa-newspaper-o"></i>',
+								'btn_close'					: '<i class="fa fa-close"></i>',
+								'btn_send'					: '<i class="fa fa-paper-plane"></i>',
+							  		  }
+
+	var dict_of_about				= {
+		'about_section_content_large'		: [
+												'about_section_content_1',
+												'about_section_content_2',
+												'about_section_content_3',
+											  ],
+		'about_section_content_small'		: [
+												'about_section_content_1',
+												'about_section_content_2',
+												'about_section_content_3',
+											  ],
+							  		  }
+
+	var dict_of_keys_other			= {
+		'about_section_title'				: [
+												'about_section_title_large',
+												'about_section_title_small',
+											  ],
+
+		'services_section_title'			: [
+												'services_section_title_large',
+												'services_section_title_small',
+											  ],
+
+		'services_section_court_title'		: [
+												'services_section_court_title_large',
+												'services_section_court_title_small',
+											  ],
+
+		'services_section_court_content'	: [
+												'services_section_court_content_large',
+												'services_section_court_content_small',
+											  ],
+
+		'services_section_corp_title'		: [
+												'services_section_corp_title_large',
+												'services_section_corp_title_small',
+											  ],
+
+		'services_section_corp_content'		: [
+												'services_section_corp_content_large',
+												'services_section_corp_content_small',
+											  ],
+
+		'services_section_bis_title'		: [
+												'services_section_bis_title_large',
+												'services_section_bis_title_small',
+											  ],
+
+		'services_section_bis_content'		: [
+												'services_section_bis_content_large',
+												'services_section_bis_content_small',
+											  ],
+
+		'services_section_intel_title'		: [
+												'services_section_intel_title_large',
+												'services_section_intel_title_small',
+											  ],
+
+		'services_section_intel_content'	: [
+												'services_section_intel_content_large',
+												'services_section_intel_content_small',
+											  ],
+
+		'services_section_forei_title'		: [
+												'services_section_forei_title_large',
+												'services_section_forei_title_small',
+											  ],
+
+		'services_section_forei_content'	: [
+												'services_section_forei_content_large',
+												'services_section_forei_content_small',
+											  ],
+
+		'services_section_proj'				: [
+												'services_section_proj_large',
+												'services_section_proj_small',
+											  ],
+
+		'press_section_title'				: [
+												'press_section_title_large',
+												'press_section_title_small',
+											  ],
+										
+		'press_section_no_published'		: ['press_section_no_published'],
+
+		'press_section_all_pub'				: ['press_section_all_pub'],
+
+		'contact_section_title'				: [
+												'contact_section_title_large',
+												'contact_section_title_small',
+											  ],
+
+		'contact_section_preform_msg'		: [
+												'contact_section_preform_msg_large',
+												'contact_section_preform_msg_small',
+											  ],
+
+		'contact_section_location'			: ['contact_section_location'],
+
+		'legal_and_using_info'				: ['legal_and_using_info'],	
+
+		'copy_rights'						: ['copy_rights'],	
+							  		  }
+
+
+	// function change_language() {
+	// 	console.log('flag for language', flag_for_language)
+
+	// 	if (flag_for_language == 'ru') {
+	// 		flag_for_language = 'en'
+	// 		$('#change_language').attr("title", 'RUSSIA')
+	// 	}
+	// 	else {
+	// 		flag_for_language = 'ru'
+	// 		$('#change_language').attr("title", 'ENGLISH')
+	// 	}
+		
+	// 	$.ajax({
+ //      		type    : "GET",
+ //      		url     : "{% url 'main:get_changed_language_content' %}",
+ //      		data    : { 
+ //                  		language  : flag_for_language,
+ //                	  },
+
+ //      		success : function(json) {
+ //      			// console.log('CONTENT IN CHANGE LANGUAGE SECTION', json.content)
+
+ //      			if (json.content || json.content.length) {
+ //          			for (i = 0; i < list_of_keys_meta.length; i++) {
+ //          				if (list_of_keys_meta[i] in json.content) {
+ //          					$('#' + list_of_keys_meta[i]).attr("content", json.content[list_of_keys_meta[i]])
+ //          				}
+ //      				}
+
+ //          			for (i = 0; i < list_of_keys_nav.length; i++) {
+ //          				if (list_of_keys_nav[i] in json.content) {
+ //          					$('#' + list_of_keys_nav[i]).attr("title", json.content[list_of_keys_nav[i]])
+ //          				}
+ //      				}
+
+ //      				for (i = 0; i < list_of_keys_form.length; i++) {
+ //          				if (list_of_keys_form[i] in json.content) {
+ //          					$('#' + list_of_keys_form[i]).attr("placeholder", json.content[list_of_keys_form[i]])
+ //          				}
+ //      				}
+
+ //      				for (i = 0; i < list_of_keys_slogan.length; i++) {
+ //          				if (('slogan_p1' in json.content) && ('slogan_p2' in json.content)) {
+ //          					$('#' + list_of_keys_slogan[i]).html(json.content['slogan_p1'] 
+ //          														 + "<br>"
+ //          														 + json.content['slogan_p2'])
+ //          				}
+ //      				}
+
+ //      				for (var key in dict_of_keys_icons) {
+ //          				if (key in json.content) {
+ //          					$('#' + key).html(dict_of_keys_icons[key] + " " + json.content[key])
+ //          				}
+ //      				}
+
+ //      				for (var key in dict_of_about) {
+ //      					var all_key = ''
+ //      					for (i = 0; i < dict_of_about[key].length; i++) {
+ //      						if (dict_of_about[key][i] in json.content) {
+ //      							console.log(dict_of_about[key][i])
+ //      							if (dict_of_about[key][i] == 'about_section_content_2') {
+ //      								all_key += '<span style="color: black !important;"><strong>' 
+ //      									       + json.content[dict_of_about[key][i]] + '</strong></span>'
+ //      							}
+ //      							else {
+ //      								all_key += json.content[dict_of_about[key][i]]
+ //      							}
+ //      							console.log(all_key)
+ //      						}
+ //      					}
+ //      					$('#' + key).html(all_key)
+ //      				}
+
+
+ //      				for (var key in dict_of_keys_other) {
+ //      					if (key in json.content) {
+ //      						for (i = 0; i < dict_of_keys_other[key].length; i++) {
+ //      							$('#' + dict_of_keys_other[key][i]).text(json.content[key])
+ //      						}
+ //      					}
+ //      				}
+ //      			}
+ //      		}
+ //    	});
+	// 	remove_old_press(list_id)
+	// 	remove_old_press_from_modal(modal_list_id)
+	// 	clearInterval(intervalID)
+ //    	get_press(flag_for_language)
+ //    	get_press_interval(intervalTime);
+ //    	list_id = []
+ //    	modal_list_id = []
+	// }
+
+</script>

@@ -1,0 +1,109 @@
+<script type="text/javascript">
+  
+  var intervalID_modal
+  
+
+  function remove_old_press_from_modal(list) {
+    if (list.length) {
+      for (i = 0; i < list.length; i++) {
+        $('#modal-' + (list[i])).remove()
+        console.log('REMOVED FROM MODAL ID=', list[i])
+      } 
+    }
+  }
+
+
+  function get_json_content_modal(content) {
+    return `<div id='modal-${content.id}'><h4 class='w3-text-light-grey'>${content.title}</h4>
+            <p class='w3-text-light-grey'>${date_pub[flag_for_language]}: 
+            ${content.added_at}</p><p><i>${content.text}</i></p>
+            <p>${author[flag_for_language]}: <i>${content.author}</i></p>
+            <p><a href="${content.source}">${content.source}</a></p>
+            <hr align="left" style="width: 200px; color: black; background-color: black; height: 2px; border-width: 0;" class='w3-opacity'></div>`
+  } 
+
+
+  function print_json_content_modal(content_for_print) {
+    console.log(new Date())
+    console.log('FROM MODAL JSON.new_press_list', content_for_print.new_press_list)
+    console.log('FROM MODAL JSON.old_press_list', content_for_print.old_press_list)
+    console.log('FROM MODAL JSON.new_list_id', content_for_print.new_list_id)
+    console.log('FROM MODAL JSON.show_modal', content_for_print.show_modal)
+  }
+
+
+  $('#modal_for_all_press').on('show.bs.modal', function (event,flag_language=flag_for_language) {
+    
+    clearInterval(intervalID)
+
+    $("html").addClass("modal-open")
+
+    $.ajax({
+      type    : "GET",
+      url     : "{% url 'main:get_press' %}",
+      data    : { 
+                  flag      : 2,
+                  language  : flag_language,
+                  list_id   : JSON.stringify(modal_list_id) 
+                },
+
+      success : function(json) {
+        print_json_content_modal(json)
+
+        if (json.new_press_list.length) {
+          for (i = 0; i < json.new_press_list.length; i++) {
+            $('#modal_news_output').prepend(get_json_content_modal(json.new_press_list[i]))
+          }
+        }
+        
+        if (json.old_press_list) {
+          remove_old_press_from_modal(json.old_press_list)
+        }
+
+        if (json.new_list_id) {
+          modal_list_id = json.new_list_id
+        } 
+      }
+    });
+    
+    intervalID_modal = setInterval(function (flag_language = flag_for_language) {
+      $.ajax({
+        type    : "GET",
+        url     : "{% url 'main:get_press' %}",
+        data    : { 
+                    flag      : 2,
+                    language  : flag_language,
+                    list_id   : JSON.stringify(modal_list_id) 
+                  },
+
+        success : function(json) {
+          print_json_content_modal(json)
+
+          if (json.new_press_list || json.new_press_list.length) {
+            for (i = 0; i < json.new_press_list.length; i++) {
+              $('#modal_news_output').prepend(get_json_content_modal(json.new_press_list[i]))
+            }
+          }
+          
+          if (json.old_press_list) {
+            remove_old_press_from_modal(json.old_press_list)
+          }
+
+          if (json.new_list_id) {
+            modal_list_id = json.new_list_id
+          } 
+        }
+      });
+    }, intervalTime)
+
+  });
+  
+  $('#modal_for_all_press').on('hide.bs.modal', function (event) {
+    $("html").removeClass("modal-open")
+
+    clearInterval(intervalID_modal)
+    setTimeout(func_get_press_interval, 1)
+    get_press_interval(intervalTime)
+  });
+
+</script>

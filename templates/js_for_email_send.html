@@ -1,0 +1,107 @@
+<script type="text/javascript">
+
+  var csrftoken         = jQuery("[name=csrfmiddlewaretoken]").val();
+  
+  var formData          = $('#form')
+  var sender            = $('#contact_section_form_sender')
+  var email             = $('#contact_section_form_email')
+  var msg               = $('#contact_section_form_msg')
+
+
+  $(document).ready(function (event){
+    validate();
+    $('#contact_section_form_sender, #contact_section_form_email, #contact_section_form_msg').change(validate);
+
+    console.log('validate', event)
+  });
+
+  function validate(){
+    if ($('#contact_section_form_sender').val().length   >   0   &&
+        $('#contact_section_form_email').val().length    >   0   &&
+        $('#contact_section_form_msg').val().length      >   0) {
+        // $("#btn_send").attr("disabled", false);
+    }
+    else {
+        // $("#btn_send").attr("disabled", true);
+    }
+  } 
+
+  $('#modal_for_send_message').on('show.bs.modal', function (event) {
+    console.log('LANGUAGE', flag_for_language)
+    $.ajax({
+      type    : "GET",
+      url     : "{% url 'main:get_message_for_waiting' %}",
+      data    : { 
+                  flag_for_waiting    : 'sending',
+                  language            : flag_for_language,
+                },
+
+      success : function(json) {
+        $('#modal_send_message').html("<table><tr><td class='w3-text-white'><h5>" 
+                                      + json.message + "</h5></td><td><div class='loader'></div></td></tr></table>")
+      }
+    });
+  })
+
+  var marker = 0
+  // document.getElementById("btn_send").onclick = function() {marker = 1}
+
+
+  formData.submit(function(event) {
+
+    
+    console.log('onclick', event)
+    $('#modal_for_send_message').modal()
+    // if (marker == 1) {
+
+
+    //   marker = 0
+    // }
+
+    console.log('submit', event)
+
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+
+    console.log('ajax sent', event)
+    event.preventDefault()
+    // $('#btn_send').attr('disabled', true)
+
+    $.ajax({
+      type    : "POST",
+      url     : "{% url 'main:get_data_for_messages' %}",
+      data    : { 
+                  sender              : sender.val(), 
+                  email               : email.val(),
+                  msg                 : msg.val(), 
+                  csrfmiddlewaretoken : csrftoken,
+                  language            : flag_for_language,
+                },
+
+      success : function(json) {
+        $('#modal_send_message').html("<div><h5 class='w3-text-white'> " 
+                                          + json.reply + "</h5></div>")
+
+        $('#button_for_modal_close').attr('hidden', false)
+
+        if (json.flag == 1) {
+          formData[0].reset()
+        }
+      }
+    });
+  });
+
+  function hide_button() {
+    $('#button_for_modal_close').attr('hidden', true)
+  }
+
+</script>

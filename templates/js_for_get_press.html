@@ -1,0 +1,168 @@
+<script type="text/javascript">
+      
+  var intervalID
+  var hide          = false
+  var list_id       = []
+  var modal_list_id = []
+  var intervalTime  = 5000
+
+  var author        = {
+                        'ru': 'Автор',
+                        'en': 'Author',
+                      }
+
+  var date_pub      = {
+                        'ru': 'Дата публикации',
+                        'en': 'Date published',
+                      }
+
+
+  // function get_json_content(content) {
+  //   return `<div id='${content.id}'>
+  //           <p class='w3-text-black'><span><u>${content.title}</u></span></p>
+  //           <p class='w3-text-dark-grey'>${date_pub[flag_for_language]}: ${content.added_at}
+  //           </p><p><i class='w3-text-black'>${content.text}</i></p>
+  //           <p><i class='w3-text-dark-grey'>${author[flag_for_language]}: 
+  //           </i>${content.author}</p><p><a href="${content.source}">${content.source}</a></p><hr style="width: 200px; color: black; background-color: black; height: 2px; border-width: 0;" class='w3-opacity'></div>`
+  // }
+
+  function get_json_content(content) {
+    return `<div id='${content.id}'>
+            <a href="#press${content.id}" class='w3-text-black' data-toggle="collapse" style="font-size: 15px;"><u>${content.title}</u></a>
+            <div id="press${content.id}" class="collapse"><br><p class='w3-text-dark-grey'>${date_pub[flag_for_language]}: ${content.added_at}
+            </p><p><i class='w3-text-black'>${content.text}</i></p>
+            <p><i class='w3-text-dark-grey'>${author[flag_for_language]}: 
+            </i>${content.author}</p><p><a href="${content.source}">${content.source}</a></p><hr align="left" style="width: 200px; color: black; background-color: black; height: 2px; border-width: 0;" class='w3-opacity'></div></div><br>`
+  }
+
+
+  function print_json_content(content_for_print) {
+    console.log(new Date())
+    console.log('JSON.new_press_list', content_for_print.new_press_list)
+    console.log('JSON.old_press_list', content_for_print.old_press_list)
+    console.log('JSON.new_list_id', content_for_print.new_list_id)
+    console.log('JSON.show_modal', content_for_print.show_modal)
+  }
+
+
+  var func_get_press_interval = function(flag_language = flag_for_language) {
+    $.ajax({
+      type    : "GET",
+      url     : "{% url 'main:get_press' %}",
+      data    : { 
+                  flag      : 1,
+                  language  : flag_language,
+                  list_id   : JSON.stringify(list_id), 
+                },
+
+      success : function(json) {
+        print_json_content(json)
+
+        if (json.new_press_list.length) {
+          for (i = 0; i < json.new_press_list.length; i++) {
+            if (json.new_press_list[i].id < list_id[0]) {
+              $('#news_output').append(get_json_content(json.new_press_list[i]))
+            }
+            else {
+              $('#news_output').prepend(get_json_content(json.new_press_list[i]))
+            }
+          }
+        }
+        
+        if (json.old_press_list) {
+          remove_old_press(json.old_press_list)
+        }
+        
+        if (hide == false) {
+          $('#press_section_no_published').hide();
+          hide = true
+        }
+
+        show_modal(json.show_modal)
+
+        if (!json.new_list_id.length) {
+          $('#press_section_no_published').show();
+          hide = false
+          for (i = 0; i < list_id.length; i++) {
+            $('#' + (list_id[i])).remove()
+          }
+        }
+
+        list_id = json.new_list_id        
+
+      }
+    });
+  }
+
+
+  function remove_old_press(list) {
+    if (list.length) {
+      for (i = 0; i < list.length; i++) {
+        $('#' + (list[i])).remove()
+        console.log('REMOVED ID=', list[i])
+      }
+    }  
+  }
+
+
+  function show_modal(sm) {
+    if (sm) {
+      $('#btn_all_pub').attr('hidden', false)
+    }
+    else {
+      $('#btn_all_pub').attr('hidden', true)
+    }
+  }
+
+
+  function get_press() {
+    console.log('flag for language', flag_for_language)
+    
+    $.ajax({
+      type    : "GET",
+      url     : "{% url 'main:get_press' %}",
+      data    : { 
+                  flag      : 0,
+                  language  : flag_for_language,
+                },
+
+      success : function(json) {
+        print_json_content(json)
+
+        if (json.new_press_list.length) {
+          for (i = 0; i < json.new_press_list.length; i++) {
+            $('#news_output').prepend(get_json_content(json.new_press_list[i]))
+          }
+          
+          if (json.show_modal) {
+            $('#btn_all_pub').attr('hidden', false)
+          }
+        }
+
+        if (json.new_press_list.length) {
+          $('#press_section_no_published').hide();
+          hide = true
+        }
+        else {
+          $('#press_section_no_published').show();
+          hide = false
+        }
+
+        show_modal(json.show_modal)
+        
+        list_id = json.new_list_id
+      }
+    });
+  }
+
+
+  function get_press_interval(intervalTime) {
+    intervalID = setInterval(func_get_press_interval, intervalTime);
+  }
+
+
+  get_press();
+
+  get_press_interval(intervalTime);
+
+</script>

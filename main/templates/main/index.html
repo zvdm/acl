@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+<title>ACL Company | Ассоциация корпоративных юристов</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta id="meta_discripion" name="description" content="{{ meta_discripion }}">
+
+{% include 'js_for_language.html' %}
+
+{% include 'js_for_add_bootstrap_css.html' %}
+
+<link rel="icon" type='image/png' href="{% static 'images/only_logo_small.png'%}">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quattrocento Sans">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<style>
+
+h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+.w3-row-padding img {margin-bottom: 12px}
+
+body {font-family: "Montserrat", sans-serif; position: relative;}
+
+/* Set the width of the sidebar to 120px */
+.w3-sidebar {width: 120px; background: #222;}
+
+/* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
+#main {margin-left: 120px}
+
+/* Remove margins from "page content" on small screens */
+@media only screen and (max-width: 600px) {#main {margin-left: 0}}
+
+.nav-link.active {
+  color: white !important;
+  background-color: black !important;
+}
+
+.close {
+  color: white !important;
+}
+
+.brand-font {
+  font-family: Quattrocento Sans; 
+  font-size: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #1e1e15;
+  width: 30px;
+  height: 30px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+html.modal-open {
+  overflow: hidden;
+}
+
+#change_language_small:hover {
+  opacity: 1.0;
+  box-shadow: none;
+}
+
+.hov {
+  background-color: #f4511e;
+  border: none;
+  color: white;
+  text-align: center;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+.hov:hover {
+  opacity: 1;
+  box-shadow: 0px 0px 20px 5px white;
+}
+
+.navbar-nav a:hover, .navbar-nav a.active {
+  color: black !important;
+  background-color: #fff !important;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+.smooth {}
+
+</style>
+
+
+<body class="w3-white" data-spy="scroll" data-target="#navbar_id" data-offset="50">
+
+<!-- NAVBAR -->
+<!-- Icon Bar (Sidebar - hidden on small screens) -->
+<nav id="navbar_id" class="w3-sidebar w3-bar-block w3-tiny w3-hide-small w3-center w3-black navbar-nav smooth" style="width:100px">
+
+  <!-- Avatar image in top left corner -->
+  <br><br>
+  <img src="{% static 'images/only_logo.png' %}" class="center">
+
+  <p class="brand-font"><strong>ACL</strong></p>
+
+  <a id="navbar_home" href="#home" class="w3-bar-item w3-button w3-padding-large nav-link" data-toggle="tooltip" data-placement="right" title="{{ navbar_home }}">
+    <i class="fa fa-home w3-xxlarge"></i>
+  </a>
+
+  <a id="navbar_about" href="#about" class="w3-bar-item w3-button w3-padding-large nav-link" data-toggle="tooltip" data-placement="right" title="{{ navbar_about }}">
+    <i class="fa fa-group w3-xlarge"></i> 
+  </a>
+
+  <a id="navbar_services" href="#services" class="w3-bar-item w3-button w3-padding-large nav-link" data-toggle="tooltip" data-placement="right" title="{{ navbar_services }}">
+    <i class="fa fa-handshake-o w3-xlarge"></i>
+  </a>
+
+  <a id="navbar_press" href="#news" class="w3-bar-item w3-button w3-padding-large nav-link" data-toggle="tooltip" data-placement="right" title="{{ navbar_press }}">
+    <i class="fa fa-newspaper-o w3-xlarge"></i>  
+  </a>
+
+  <a id="navbar_contact" href="#contact" class="w3-bar-item w3-button w3-padding-large nav-link" data-toggle="tooltip" data-placement="autoright" title="{{ navbar_contact }}">
+    <i class="fa fa-envelope w3-xlarge"></i>
+  </a>
+  <br><br>
+
+  <!-- <button id='change_language' class="w3-bar-item w3-button w3-padding-large w3-hover-black" data-toggle="tooltip" data-placement="autoright" onclick="change_language()" title="ENGLISH"><i class="fa fa-language w3-xlarge " style="font-size:48px; color: white;"></i></button> -->
+  
+</nav>
+
+<!-- Navbar on small screens (Hidden on medium and large screens) -->
+<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
+
+  <div class="w3-bar w3-white w3-opacity w3-hover-opacity-off w3-center w3-small smooth">
+    <a href="#home" class="w3-bar-item w3-button" style="width:20% !important"><i class="fa fa-home w3-xlarge"></i></a>
+    <a href="#about" class="w3-bar-item w3-button" style="width:20% !important"><i class="fa fa-group w3-xlarge"></i></a>
+    <a href="#services" class="w3-bar-item w3-button" style="width:20% !important"><i class="fa fa-handshake-o w3-xlarge"></i></a>
+    <a href="#news" class="w3-bar-item w3-button" style="width:20% !important"><i class="fa fa-newspaper-o w3-xlarge"></i></a>
+    <a href="#contact" class="w3-bar-item w3-button" style="width:20% !important"><i class="fa fa-envelope w3-xlarge"></i></a>
+  </div>
+
+</div>
+<!-- END NAVBAR -->
+
+
+<!-- PAGE CONTENT -->
+<div class="w3-padding-large" id="main">
+
+  <div class="w3-bar w3-hide-small">
+
+    <div class="w3-white w3-right smooth">
+      <a href="callto:+79002722020" class="w3-hover-text-indigo slideanim" style="text-decoration: none; color: black;"><i class="fa fa-phone fa-fw w3-xlarge w3-margin-right" style="color: #001489;"></i> +7 900 272-20-20</a>
+      <br>
+      <a href="mailto:info@acl-law.com" target="_top" class="w3-hover-text-indigo slideanim" style="text-decoration: none; color: black;"><i class="fa fa-envelope fa-fw w3-xlarge w3-margin-right" style="color: #001489;"></i> info@acl-law.com</a>
+    </div>
+
+  </div>
+
+<!-- HEADER/HOME -->
+  <header class="w3-container w3-padding-32 w3-center w3-white" id="home">
+
+    <h1 id="slogan_large" class="w3-jumbo w3-hide-small">{{ slogan_p1 }}<br>{{ slogan_p2 }}</h1>
+    <h6 id="slogan_small" class="w3-hide-medium w3-hide-large">{{ slogan_p1 }}<br>{{ slogan_p2 }}</h6>
+    <img src="{% static 'images/animation.gif' %}" alt="firm" class="w3-image w3-hide-small" width="650" height="450">
+    <img src="{% static 'images/animation.gif' %}" alt="firm" class="w3-image w3-hide-large w3-hide-medium">
+    <br class="w3-image w3-hide-small"><br class="w3-image w3-hide-small"><br class="w3-image w3-hide-small"><br class="w3-image w3-hide-small">
+
+  </header>
+<!-- END HEADER/HOME -->
+
+
+<!-- ABOUT SECTION -->
+  <div class="w3-content w3-justify w3-text-dark-grey w3-padding-64" id="about">
+
+    <br><br><br>
+    <h2 id="about_section_title_large" class="w3-text-black w3-hide-small slideanim" data-aos="fade-zoom" data-aos-duration="1000"><span style="color: #001489;">{{ about_section_title }}</span></h2>
+    <h4 id="about_section_title_small" class="w3-text-black w3-hide-medium w3-hide-large slideanim" data-aos="fade-zoom" data-aos-duration="1000"><span style="color: #001489;">{{ about_section_title }}</span></h4>
+    <hr align="left" style="width: 200px; color: black; background-color: black; height: 2px; border-width: 0;" class="w3-opacity slideanim" data-aos="fade-zoom" data-aos-duration="1000">
+    <p id="about_section_content_large" class="w3-text-black w3-hide-small slideanim" style="font-size: 20px;" data-aos="fade-zoom" data-aos-duration="1000">{{ about_section_content_1 }}<span style="color: black !important;"><strong>{{ about_section_content_2 }}</strong></span>{{ about_section_content_3 }}<br><br>{{ about_section_content_4 }}</p>
+    <p id="about_section_content_small" class="w3-text-black w3-hide-medium w3-hide-large slideanim" style="font-size: 13px;" data-aos="fade-zoom" data-aos-duration="1000">{{ about_section_content_1 }}<span style="color: black !important;"><strong>{{ about_section_content_2 }}</strong></span>{{ about_section_content_3 }}<br><br>{{ about_section_content_4 }}</p>
+    <br><table style="width:100%" class="w3-hide-small slideanim" data-aos="fade-zoom" data-aos-duration="1000">
+      <tr>
+        <th style="text-align:center; font-size: 18px;"><a href="http://maisadour-semences.fr/ru/">{{ about_section_content_5 }}</a></th>
+        <th style="text-align:center; font-size: 18px;"><a href="https://bonduelle.ru/">{{ about_section_content_6 }}</a><br><a href="https://bonduelle.ru/">{{ about_section_content_7 }}</a></th>
+      </tr>
+      <tr><td><br></td><td></td></tr>
+      <tr>
+        <td style="text-align:center;">
+          <a href="http://maisadour-semences.fr/ru/"><img src="{% static 'images/masseeds.png' %}" alt="firm" class="w3-image w3-center"></a>
+        </td>
+        <td style="text-align:center;">
+          <a href="https://bonduelle.ru/"><img src="{% static 'images/bonduelle.png' %}" alt="firm" class="w3-image w3-center" width="300" height="100"></a>
+        </td>
+      </tr>
+    </table>	
+    <table style="width:100%" class="w3-hide-medium w3-hide-large">
+    <tr>
+      <th style="text-align:center; font-size: 13px;"><a href="http://maisadour-semences.fr/ru/">{{ about_section_content_5 }}</a></th>
+    </tr>
+    <tr><td><br></td><td></td></tr>
+    <tr>
+      <td>
+        <a href="http://maisadour-semences.fr/ru/"><img src="{% static 'images/masseeds.png' %}" alt="firm" class="w3-image w3-center"></a>
+      </td>
+    </tr>
+    <tr><td><br></td><td></td></tr>
+    <tr><td><br></td><td></td></tr>
+    <tr>
+      <th style="text-align:center; font-size: 13px;"><a href="https://bonduelle.ru/">{{ about_section_content_6 }}</a><br><a href="https://bonduelle.ru/">{{ about_section_content_7 }}</a></th>
+    </tr>
+    <tr><td><br></td><td></td></tr>
+    <tr>
+      <td>
+        <a href="https://bonduelle.ru/"><img src="{% static 'images/bonduelle.png' %}" alt="firm" class="w3-image w3-center" width="350" height="100"></a>
+      </td>
+    </tr>
+  </table>
+
+  </div>
+<!-- END ABOUT SECTION -->
+
+    
+<!-- SERVICES SECTION -->
+  <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="services">
+    
+    <br><br><br>
+    <h2 id="services_section_title_large" class="w3-text-black w3-hide-small slideanim" data-aos="fade-zoom" data-aos-duration="1000"><span style="color: #001489;">{{ services_section_title }}</span></h2>
+    <h4 id="services_section_title_small" class="w3-text-black w3-hide-medium w3-hide-large slideanim" data-aos="fade-zoom" data-aos-duration="1000"><span style="color: #001489;">{{ services_section_title }}</span></h4>
+    <hr align="left" style="width: 200px; color: black; background-color: black; height: 2px; border-width: 0;" class="w3-opacity slideanim" data-aos="fade-zoom" data-aos-duration="1000">
+
+    <div class="w3-row-padding" style="margin:0 -16px">
+      <div class="w3-half w3-margin-bottom slideanim">
+        <ul class="w3-ul w3-white w3-justify w3-hide-small" data-aos="fade-right" data-aos-duration="1000">
+          <li class="w3-center w3-xlarge w3-padding-16 w3-blue-gray" style="color: white;"><h4 id="services_section_court_title_large">{{ services_section_court_title }}</h4></li>
+          <li class="w3-padding-24"><div id="services_section_court_content_large">{{ services_section_court_content }}</div></li>  
+        </ul>
+        <ul class="w3-ul w3-justify w3-hide-medium w3-hide-large" data-aos="fade-zoom" data-aos-duration="1000">
+          <li class="w3-center w3-xlarge w3-padding-16 w3-blue-gray" style="color: white;"><h6 id="services_section_court_title_small" style="font-size: 13px;">{{ services_section_court_title }}</h6></li>
+          <li class="w3-white w3-padding-24"><div id="services_section_court_content_small" style="font-size: 13px;">{{ services_section_court_content }}</div></li>  
+        </ul>
+      </div>
+      <div class="w3-half w3-margin-bottom slideanim">
+        <ul class="w3-ul w3-white w3-justify w3-hide-small" data-aos="fade-left" data-aos-duration="1000">
+          <li class="w3-center w3-xlarge w3-padding-16 w3-blue-gray" style="color: white;"><h4 id="services_section_corp_title_large">{{ services_section_corp_title }}</h4></li>
+          <li class="w3-white w3-padding-24"><div id="services_section_corp_content_large">{{ services_section_corp_content }}</div></li> 
+        </ul>
+        <ul class="w3-ul w3-justify w3-hide-medium w3-hide-large" data-aos="fade-zoom" data-aos-duration="1000">
+          <li class="w3-center w3-xlarge w3-padding-16 w3-blue-gray" style="color: white;"><h6 id="services_section_corp_title_small" style="font-size: 13px;">{{ services_section_corp_title }}</h6></li>
+          <li class="w3-white w3-padding-24"><div id="services_section_corp_content_small" style="font-size: 13px;">{{ services_section_corp_content }}</div></li> 
+        </ul>
+      </div>
+    <!-- End Grid/Pricing tables -->
+    </div>
+
+    <div class="w3-row-padding slideanim" style="margin:0 -16px">
+      <div class="w3-content w3-margin-bottom w3-hide-small" data-aos="fade-zoom" data-aos-duration="1000">
+        <ul class="w3-ul w3-justify">
+          <li class="w3-center w3-xlarge w3-padding-16 w3-blue-gray" style="color: white;"><h4 id="services_section_bis_title_large">{{ services_section_bis_title }}</h4></li>
+          <li class="w3-white w3-padding-24"><div id="services_section_bis_content_large">{{ services_section_bis_content }}</div></li>
+        </ul>
+      </div>
+      <div class="w3-half w3-margin-bottom w3-hide-medium w3-hide-large" data-aos="fade-zoom" data-aos-duration="1000">
+        <ul class="w3-ul w3-justify">
+          <li class="w3-center w3-xlarge w3-padding-16 w3-blue-gray" style="color: white;"><h6 id="services_section_bis_title_small" style="font-size: 13px;">{{ services_section_bis_title }}</h6></li>
+          <li class="w3-white w3-padding-24"><div id="services_section_bis_content_small" style="font-size: 13px;">{{ services_section_bis_content }}</div></li>
+        </ul>
+      </div>
+      <!-- End Grid/Pricing tables -->
+    </div>
+      
+    <div class="w3-row-padding" style="margin:0 -16px">
+      <div class="w3-half w3-margin-bottom slideanim">
+        <ul class="w3-ul w3-justify w3-hide-small" data-aos="fade-right" data-aos-duration="1000">
+          <li class="w3-center w3-xlarge w3-padding-16 w3-blue-gray" style="color: white;"><h4 id="services_section_intel_title_large">{{ services_section_intel_title }}</h4></li>
+          <li class="w3-white w3-padding-24"><div id="services_section_intel_content_large">{{ services_section_intel_content }}</div></li>
+        </ul>
+        <ul class="w3-ul w3-justify w3-hide-medium w3-hide-large" data-aos="fade-zoom" data-aos-duration="1000">
+          <li class="w3-center w3-xlarge w3-padding-16 w3-blue-gray" style="color: white;"><h6 id="services_section_intel_title_small" style="font-size: 13px;">{{ services_section_intel_title }}</h6></li>
+          <li class="w3-white w3-padding-24"><div id="services_section_intel_content_small" style="font-size: 13px;">{{ services_section_intel_content }}</div></li>
+        </ul>
+      </div>
+      <div class="w3-half slideanim">
+        <ul class="w3-ul w3-justify w3-hide-small" data-aos="fade-left" data-aos-duration="1000">
+          <li class="w3-center w3-xlarge w3-padding-16 w3-blue-gray" style="color: white;"><h4 id="services_section_forei_title_large">{{ services_section_forei_title }}</h4></li>
+          <li class="w3-white w3-padding-24"><div id="services_section_forei_content_large">{{ services_section_forei_content }}</div></li>
+        </ul>
+        <ul class="w3-ul w3-justify w3-hide-medium w3-hide-large" data-aos="fade-zoom" data-aos-duration="1000">
+          <li class="w3-center w3-xlarge w3-padding-16 w3-blue-gray" style="color: white;"><h5 id="services_section_forei_title_small" style="font-size: 13px;">{{ services_section_forei_title }}</h5></li>
+          <li class="w3-white w3-padding-24"><div id="services_section_forei_content_small" style="font-size: 13px;">{{ services_section_forei_content }}</div></li>
+        </ul>
+      </div>
+    <!-- End Grid/Pricing tables -->
+    </div>
+    <br>
+
+    <p id="services_section_proj_large" class="w3-hide-small w3-center w3-text-blue-gray slideanim" style="font-size: 20px;" data-aos="fade-up" data-aos-duration="1000" ><strong>{{ services_section_proj }}</strong></p>
+    <p id="services_section_proj_small" class="w3-hide-medium w3-hide-large w3-center w3-text-blue-gray slideanim" style="font-size: 13px;" data-aos="fade-up" data-aos-duration="1000" ><strong>{{ services_section_proj }}</strong></p>
+    
+  </div>
+<!-- END SERVICES SECTION -->
+  
+
+<!-- NEWS SECTION -->
+  <div itemscope itemtype="http://schema.org/CreativeWork" class="w3-content w3-justify w3-text-grey w3-padding-64 slideanim" id="news">
+
+    <br><br><br>
+    <div>
+      <h2 id="press_section_title_large" class="w3-text-black w3-hide-small" data-aos="fade-zoom" data-aos-duration="1000"><span style="color: #001489;">{{ press_section_title }}</span></h2>
+      <h4 id="press_section_title_small" class="w3-text-black w3-hide-medium w3-hide-large" data-aos="fade-zoom" data-aos-duration="1000"><span style="color: #001489;" >{{ press_section_title }}</span></h4>
+      <hr align="left" style="width: 200px; color: black; background-color: black; height: 2px; border-width: 0;" class="w3-opacity slideanim" data-aos="fade-zoom" data-aos-duration="1000">
+
+      <div id="press_section_no_published" class="w3-section" data-aos="fade-zoom" data-aos-duration="1000">{{ press_section_no_published }}</div>
+      <div id="news_output" class="w3-section" style="font-size: 13px;" data-aos="fade-zoom" data-aos-duration="1000"></div>
+
+      <!-- Button trigger modal -->
+      <div data-aos="fade-zoom" data-aos-duration="1000"><button id="btn_all_pub" class="w3-button w3-dark-grey w3-padding-large w3-section btn btn-primary" type="button" data-toggle="modal" data-target="#modal_for_all_press" hidden> 
+      <i class="fa fa-newspaper-o"></i> {{ btn_all_pub }}
+      </button></div>
+    </div>
+
+    <!-- Modal for show all press -->
+    <div class="modal" id="modal_for_all_press" tabindex="-1" role="dialog" aria-labelledby="title_for_modal_for_all_press" aria-hidden="true" style="-webkit-overflow-scrolling: touch;">
+      <div class="modal-dialog modal-lg w3-modal-content w3-animate-opacity" role="document">
+        <div class="w3-dark-gray w3-section modal-content" style="border: 1px solid gray;">
+          <div class="modal-header">
+            <h5 id="press_section_all_pub" class="w3-text-light-grey modal-title" id="title_for_modal_for_all_press">{{ press_section_all_pub }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div id='modal_news_output' class="modal-body" style="font-size: 13px;">
+          </div>
+        <div class="modal-footer">
+          <button id="btn_close" type="button" class="btn btn-secondary" data-dismiss="modal">{{ btn_close }}</button>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<!-- END NEWS SECTION -->
+
+
+<!-- CONTACT SECTION -->
+  <div itemscope itemtype="http://schema.org/Organization" class="w3-padding-64 w3-content w3-text-grey" id="contact">
+    
+    <br><br><br>
+    <h2 id="contact_section_title_large" class="w3-text-black w3-hide-small slideanim" data-aos="fade-zoom" data-aos-duration="1000"><span style="color: #001489;">{{ contact_section_title }}</span></h2>
+    <h4 id="contact_section_title_small" class="w3-text-black w3-hide-medium w3-hide-large slideanim" data-aos="fade-zoom" data-aos-duration="1000"><span style="color: #001489;">{{ contact_section_title }}</span></h4>
+    <hr align="left" style="width: 200px; color: black; background-color: black; height: 2px; border-width: 0;" class="w3-opacity slideanim" data-aos="fade-zoom" data-aos-duration="1000">
+
+    <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" class="w3-section" data-aos="fade-zoom" data-aos-duration="1000">
+      <p id="contact_section_address" style="color: black;" class="slideanim"><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right" style="color: #001489;"></i> {{ contact_section_address }}</p>
+      <a itemprop="telephone" href="callto:+79002722020" class="w3-hover-text-indigo slideanim" style="text-decoration: none; color: black;"><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right" style="color: #001489;"></i> +7 900 272-20-20</a><p></p>
+      <a itemprop="email" href="mailto:info@acl-law.com" target="_top" class="w3-hover-text-indigo slideanim" style="text-decoration: none; color: black;"><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right" style="color: #001489;"></i> info@acl-law.com</a>
+    </div>
+
+    <br>
+    <p id="contact_section_preform_msg_large" class="w3-justify w3-hide-small slideanim" data-aos="fade-zoom" data-aos-duration="1000" style="color: black">{{ contact_section_preform_msg }}</p>
+    <p id="contact_section_preform_msg_small" class="w3-justify w3-hide-medium w3-hide-large slideanim" data-aos="fade-zoom" data-aos-duration="1000" style="color: black; font-size: 13px;">{{ contact_section_preform_msg }}</p>
+
+    <form id='form' method="post" class="slideanim" data-aos="fade-zoom" data-aos-duration="1000">
+      {% csrf_token %}
+      <p style="border: 1px solid gray;"><input id='contact_section_form_sender' class="w3-input w3-padding-16 w3-light-gray" name="sender_name" type="text" placeholder="Имя" required name="Name"></p>
+      <p style="border: 1px solid gray;"><input id='contact_section_form_email' class="w3-input w3-padding-16 w3-light-gray" name="reply_email" type="email" placeholder="Адрес электронной почты" required name="Email"></p>
+      <p style="border: 1px solid gray;"><textarea id='contact_section_form_msg' class="w3-input w3-padding-16 w3-light-gray" name="message" type="text" placeholder="Сообщение" required name="Message" rows="4"></textarea></p>
+      <p>
+        <button id='btn_send' class="w3-button w3-dark-grey w3-padding-large w3-section btn btn-primary" type="submit">
+          <i class="fa fa-paper-plane"></i> {{ btn_send }}
+        </button>
+      </p>
+    </form>
+    
+    <br>
+
+    <!-- Modal for show waiting frame -->
+    <div class="modal" id="modal_for_send_message" tabindex="-1" role="dialog" aria-labelledby="title_for_modal_for_send_message" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered w3-animate-zoom" role="document">
+        <div class="w3-dark-gray w3-section modal-content" style="border: 1px solid #888;">
+          <div id='modal_send_message' class="modal-body" style="font-size: 13px;">
+          </div>
+          <div class="modal-footer">
+            <button id="button_for_modal_close" type="button" class="btn btn-secondary" data-dismiss="modal" onclick="hide_button()" hidden>{{ btn_close }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Map -->
+    <h3 id="contact_section_location" class="w3-text-dark-gray slideanim w3-hide-small" data-aos="fade-zoom" data-aos-duration="1000">{{ contact_section_location }}</h3>
+    <div id="map" style="width:100%; height:400px; border: 1px solid gray;"></div>
+
+  </div>
+<!-- END CONTACT SECTION -->
+  
+
+<!-- FOOTER -->
+  <footer class="w3-content w3-padding-64 w3-text-dark-grey w3-xlarge">
+    
+    <div class="w3-medium"><span id="legal_and_using_info">{{ legal_and_using_info }}</span><br><br><span id="copy_rights">{{ copy_rights }}</span></div>
+
+    <br>
+
+    <!-- <div class="w3-center"><a class="w3-center w3-padding-large w3-hide-large w3-hide-medium w3-middle" onclick="change_language()"><i class="fa fa-language w3-xlarge w3-center" style="font-size:48px; color: black;"></i></a></div> -->
+
+  </footer>
+<!-- END FOOTER -->
+
+</div>
+<!-- END PAGE CONTENT -->
+
+
+<!-- SCRIPTS SECTION -->
+
+<!-- Include Jquery, Popper and Bootstrap for scripts below -->
+{% include 'js_for_add_jquery_popper_bootstrap.html' %}
+
+
+<!-- Change language and define language flag -->
+{% include 'js_for_language.html' %}
+
+
+<!-- Get news from server -->
+{% include 'js_for_get_press.html' %}
+
+
+<!-- News modal -->
+{% include 'js_for_create_modal.html' %}
+
+
+<!-- Send message to the company -->
+{% include 'js_for_email_send.html' %}
+
+
+<!-- Google Map constructor -->
+{% include 'js_for_google_map.html' %}
+
+
+<!-- Activity sidebar during the scrolling -->
+{% include 'js_for_scrollspy.html' %}
+
+
+<!-- Include Google Map for scripts above -->
+{% include 'js_for_google_map_api-key.html' %} 
+
+
+<!-- Add smooth scrolling -->
+<script type="text/javascript">
+  
+  $(document).ready(function() {
+    $('.smooth a').on('click', function(event) {
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== '') {
+        event.preventDefault();
+
+        var hash = this.hash
+
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+          }, 400, () => {
+          window.location.hash = hash
+        });
+      }
+    });
+  });
+
+</script>
+
+
+<script>
+  AOS.init();
+</script>
+
+<!-- END SCRIPTS SECTION -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(53944696, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/53944696" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>
