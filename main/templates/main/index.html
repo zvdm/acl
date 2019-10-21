@@ -372,9 +372,10 @@ html.modal-open {
     <hr align="left" style="width: 200px; color: black; background-color: black; height: 2px; border-width: 0;" class="w3-opacity slideanim" data-aos="fade-zoom" data-aos-duration="1000">
 
     <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" class="w3-section" data-aos="fade-zoom" data-aos-duration="1000">
-      <p id="contact_section_address" style="color: black;" class="slideanim"><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right" style="color: #001489;"></i> {{ contact_section_address }}</p>
-      <a itemprop="telephone" href="callto:+79002722020" class="w3-hover-text-indigo slideanim" style="text-decoration: none; color: black;"><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right" style="color: #001489;"></i> +7 900 272-20-20</a><p></p>
-      <a itemprop="email" href="mailto:info@acl-law.com" target="_top" class="w3-hover-text-indigo slideanim" style="text-decoration: none; color: black;"><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right" style="color: #001489;"></i> info@acl-law.com</a>
+      <p id="contact_section_address" style="color: black;" class="slideanim"><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right" style="color: #001489; vertical-align: middle"></i> {{ contact_section_address }}</p>
+      <a itemprop="telephone" href="callto:+79002722020" class="w3-hover-text-indigo slideanim" style="text-decoration: none; color: black;"><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right" style="color: #001489; vertical-align: middle"></i> +7 900 272-20-20</a><p></p>
+      <a itemprop="email" href="mailto:info@acl-law.com" target="_top" class="w3-hover-text-indigo slideanim" style="text-decoration: none; color: black;"><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right" style="color: #001489; vertical-align: middle"></i> info@acl-law.com</a><p></p>
+      <a href="https://www.instagram.com/acl_law_krasnodar/" target="_blank" class="w3-hover-text-indigo slideanim" style="text-decoration: none; color: black; margin-left: 6px; margin-top: 3px;"><img src="{% static 'images/instagram.png' %}" alt="instagram" width="35" height="35" class="w3-margin-right"> ACL Company in Instagram</a>
     </div>
 
     <br>
@@ -559,6 +560,17 @@ html.modal-open {
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/53944696" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146930149-1">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146930149-1');
+</script>
 
 </body>
 </html>
